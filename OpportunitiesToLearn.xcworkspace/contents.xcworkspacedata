@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:War">
+   </FileRef>
+   <FileRef
+      location = "group:12_InstancesMethodsProperties.playground">
+   </FileRef>
+   <FileRef
       location = "group:07_BoogieBot.playground">
    </FileRef>
    <FileRef
