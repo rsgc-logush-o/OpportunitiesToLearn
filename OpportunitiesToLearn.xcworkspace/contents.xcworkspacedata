@@ -2,6 +2,15 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:blackjack/blackjack.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:War Graphics/War Graphics.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:WarLogic.playground">
+   </FileRef>
+   <FileRef
       location = "group:War">
    </FileRef>
    <FileRef
