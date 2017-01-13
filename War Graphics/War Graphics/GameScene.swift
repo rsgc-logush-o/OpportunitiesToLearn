@@ -76,13 +76,6 @@ class GameScene: SKScene {
             }
         }
         
-        func cardToUnicode(card: Card) -> String{
-            
-            let cardToReturn = 0x1F0A1 + card.suit * 16 + card.value
-            
-            return String(cardToReturn)
-            
-        }
         
 
         
@@ -143,6 +136,15 @@ class GameScene: SKScene {
 
     }
     
+    func cardToUnicode(card: Card) -> String {
+        
+        let cardToReturn = 0x1F0A1 + card.suit * 16 + card.value
+        
+        return String(cardToReturn)
+        
+    }
+
+    
     func showCards(playerCard: Card, dealerCard: Card)
     {
         let player = SKLabelNode(fontNamed: "Helvetica")
@@ -151,7 +153,12 @@ class GameScene: SKScene {
         player.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 8)
         dealer.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - frame.size.height / 8)
         
-        player.text = ""
+        player.text = cardToUnicode(card: playerCard)
+        dealer.text = cardToUnicode(card: dealerCard)
+        
+        self.addChild(player)
+        self.addChild(dealer)
+        
         
         
     }
