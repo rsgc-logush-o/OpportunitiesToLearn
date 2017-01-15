@@ -55,10 +55,6 @@ class GameScene: SKScene {
     var playerHand : [Card] = []
     var computerHand : [Card] = []
     
-    var testCard = Card(value: 2, suit: 0)
-    
-    
-    var testCard2 = Card(value: 3, suit: 1)
     
     
     
@@ -140,8 +136,7 @@ class GameScene: SKScene {
         for (value, card) in computerHand.enumerated() {
             print("Card \(value) in dealer's hand is a suit of \(Suit.glyph(forHashValue: card.suit)) and value is \(card.value)")
         }
-        showCards(playerCard: testCard, dealerCard: testCard2)
-
+       
     }
     
     func cardToUnicode(card: Card) -> String {
@@ -178,6 +173,7 @@ class GameScene: SKScene {
     
     // Responds to first touch point
     override func touchesBegan(with event: NSEvent) {
+        print("yes")
         playATurn()
     }
     
@@ -190,7 +186,7 @@ class GameScene: SKScene {
     {
         var gameIsOn = true
         
-        while gameIsOn{
+        
             print("=====================================")
             
             var playersCard = playerHand[0]
@@ -264,7 +260,7 @@ class GameScene: SKScene {
             {
                 gameIsOn = false
             }
-        }
+        
     }
     
     
