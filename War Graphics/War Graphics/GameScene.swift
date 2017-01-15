@@ -52,6 +52,15 @@ enum Suit : String {
 
 class GameScene: SKScene {
     
+    var playerHand : [Card] = []
+    var computerHand : [Card] = []
+    
+    var testCard = Card(value: 2, suit: 0)
+    
+    
+    var testCard2 = Card(value: 3, suit: 1)
+    
+    
     
     
     // Set up the scene
@@ -94,8 +103,7 @@ class GameScene: SKScene {
         }
         
         // Initialize hands
-        var playerHand : [Card] = []
-        var computerHand : [Card] = []
+        
         
         // "Shuffle" the deck and give half the cards to the player
         while deck.count > 26 {
@@ -132,7 +140,7 @@ class GameScene: SKScene {
         for (value, card) in computerHand.enumerated() {
             print("Card \(value) in dealer's hand is a suit of \(Suit.glyph(forHashValue: card.suit)) and value is \(card.value)")
         }
-        
+        showCards(playerCard: testCard, dealerCard: testCard2)
 
     }
     
@@ -140,7 +148,9 @@ class GameScene: SKScene {
         
         let cardToReturn = 0x1F0A1 + card.suit * 16 + card.value
         
-        return String(cardToReturn)
+        let returnedCard = UnicodeScalar(cardToReturn)
+        
+        return String(Character(returnedCard!))
         
     }
 
@@ -152,6 +162,9 @@ class GameScene: SKScene {
         
         player.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 8)
         dealer.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - frame.size.height / 8)
+        
+        player.fontSize = 100
+        dealer.fontSize = 100
         
         player.text = cardToUnicode(card: playerCard)
         dealer.text = cardToUnicode(card: dealerCard)
@@ -185,6 +198,8 @@ class GameScene: SKScene {
             
             playerHand.remove(at: 0)
             computerHand.remove(at: 0)
+            
+            showCards(playerCard: playersCard, dealerCard: computersCard)
             
             print("The dealer's card is a \(computersCard.value) of \(Suit.glyph(forHashValue: computersCard.suit))")
             
