@@ -55,10 +55,6 @@ class GameScene: SKScene {
     var playerHand : [Card] = []
     var computerHand : [Card] = []
     
-    
-    
-    
-    
     // Set up the scene
     override func didMove(to view: SKView) {
         
@@ -170,17 +166,17 @@ class GameScene: SKScene {
         
         
     }
+        // Responds to first touch point
     
-    // Responds to first touch point
-    override func touchesBegan(with event: NSEvent) {
+    
+    override func mouseDown(with event: NSEvent)
+    {
         print("yes")
-        playATurn()
     }
+
     
     // Responds to touch "drag"
-    override func touchesEnded(with event: NSEvent) {
-        playATurn()
-    }
+    
     
     func playATurn()
     {
