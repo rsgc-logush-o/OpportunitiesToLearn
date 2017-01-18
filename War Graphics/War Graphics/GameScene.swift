@@ -172,6 +172,7 @@ class GameScene: SKScene {
     override func mouseDown(with event: NSEvent)
     {
         print("yes")
+        playATurn()
     }
 
     
