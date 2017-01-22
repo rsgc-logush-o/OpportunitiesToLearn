@@ -55,6 +55,20 @@ class GameScene: SKScene {
     var playerHand : [Card] = []
     var computerHand : [Card] = []
     
+    var player = SKLabelNode(fontNamed: "Helvetica")
+    var dealer = SKLabelNode(fontNamed: "Helvetica")
+    
+    var playerWar1 = SKLabelNode(fontNamed: "Helvetica")
+    var playerWar2 = SKLabelNode(fontNamed: "Helvetica")
+    
+    var dealerWar1 = SKLabelNode(fontNamed: "Helvetica")
+    var dealerWar2 = SKLabelNode(fontNamed: "Helvetica")
+    
+    var winner = SKLabelNode(fontNamed: "Helvetica")
+    
+    
+
+    
     // Set up the scene
     override func didMove(to view: SKView) {
         
@@ -148,14 +162,22 @@ class GameScene: SKScene {
     
     func showCards(playerCard: Card, dealerCard: Card)
     {
-        let player = SKLabelNode(fontNamed: "Helvetica")
-        let dealer = SKLabelNode(fontNamed: "Helvetica")
+        
+        player.removeFromParent()
+        dealer.removeFromParent()
+        
+        playerWar1.removeFromParent()
+        playerWar2.removeFromParent()
+        
+        dealerWar1.removeFromParent()
+        dealerWar2.removeFromParent()
+        
         
         player.position = CGPoint(x: frame.size.width / 2, y: frame.size.height / 8)
-        dealer.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - frame.size.height / 8)
+        dealer.position = CGPoint(x: frame.size.width / 2, y: frame.size.height - frame.size.height / 4)
         
-        player.fontSize = 100
-        dealer.fontSize = 100
+        player.fontSize = 200
+        dealer.fontSize = 200
         
         player.text = cardToUnicode(card: playerCard)
         dealer.text = cardToUnicode(card: dealerCard)
@@ -164,6 +186,73 @@ class GameScene: SKScene {
         self.addChild(dealer)
         
         
+        
+    }
+    
+    func showCardsForWar(playerWarVisible: Card, playerWarNotVisible: Card, dealerWarVisible: Card, dealerWarNotVisible: Card, playerCard: Card, dealerCard: Card)
+    {
+        player.removeFromParent()
+        dealer.removeFromParent()
+        
+        playerWar1.removeFromParent()
+        playerWar2.removeFromParent()
+        
+        dealerWar1.removeFromParent()
+        dealerWar2.removeFromParent()
+        
+        player.position = CGPoint(x: frame.size.width / 4, y: frame.size.height / 8)
+        dealer.position = CGPoint(x: frame.size.width / 4, y: frame.size.height - frame.size.height / 4)
+        
+        playerWar1.position = CGPoint(x: frame.size.width * 0.45, y : frame.size.height / 8)
+        playerWar2.position = CGPoint(x: frame.size.width * 0.6, y : frame.size.height / 8)
+        
+        dealerWar1.position = CGPoint(x: frame.size.width * 0.45, y : frame.size.height - frame.size.height / 4)
+        dealerWar2.position = CGPoint(x: frame.size.width * 0.6, y : frame.size.height - frame.size.height / 4)
+        
+        player.fontSize = 200
+        dealer.fontSize = 200
+        
+        playerWar1.fontSize = 200
+        playerWar2.fontSize = 200
+        
+        dealerWar1.fontSize = 200
+        dealerWar2.fontSize = 200
+        
+        player.text = cardToUnicode(card: playerCard)
+        dealer.text = cardToUnicode(card: dealerCard)
+        
+        playerWar1.text = cardToUnicode(card: playerWarVisible)
+        playerWar2.text = "🂠"
+        
+        dealerWar1.text = cardToUnicode(card: dealerWarVisible)
+        dealerWar2.text = "🂠"
+        
+        self.addChild(player)
+        self.addChild(dealer)
+        
+        self.addChild(playerWar1)
+        self.addChild(playerWar2)
+        
+        self.addChild(dealerWar1)
+        self.addChild(dealerWar2)
+        
+    }
+    
+    func showWinner(gameWinner: String)
+    {
+        winner.removeFromParent()
+        
+        winner.position = CGPoint(x: frame.size.width * 0.5, y: frame.size.height/2)
+        
+        winner.fontSize = 100
+        
+        winner.text = "\(gameWinner) Wins!"
+        
+        self.addChild(winner)
+    }
+    
+    func playWar()
+    {
         
     }
         // Responds to first touch point
@@ -194,19 +283,21 @@ class GameScene: SKScene {
             
             showCards(playerCard: playersCard, dealerCard: computersCard)
             
-            print("The dealer's card is a \(computersCard.value) of \(Suit.glyph(forHashValue: computersCard.suit))")
+            print("The dealer's card is a \(computersCard.value + 1) of \(Suit.glyph(forHashValue: computersCard.suit))")
             
-            print("The player's card is a \(playersCard.value) of \(Suit.glyph(forHashValue: playersCard.suit))")
+            print("The player's card is a \(playersCard.value + 1) of \(Suit.glyph(forHashValue: playersCard.suit))")
             
             if playersCard.value > computersCard.value
             {
                 print("The player wins!")
+                showWinner(gameWinner: "Player")
                 playerHand.append(computersCard)
                 playerHand.append(playersCard)
                 
             }else if computersCard.value > playersCard.value
             {
                 print("The dealer wins!")
+                showWinner(gameWinner: "Dealer")
                 computerHand.append(computersCard)
                 computerHand.append(playersCard)
                 
@@ -225,13 +316,16 @@ class GameScene: SKScene {
                 var computersKnownCard = computerHand[0]
                 computerHand.remove(at: 0)
                 
-                print("The dealer's card is a \(computersKnownCard.value) of \(Suit.glyph(forHashValue: computersKnownCard.suit))")
+                print("The dealer's card is a \(computersKnownCard.value + 1) of \(Suit.glyph(forHashValue: computersKnownCard.suit))")
                 
-                print("The player's card is a \(playersKnownCard.value) of \(Suit.glyph(forHashValue: playersKnownCard.suit))")
+                print("The player's card is a \(playersKnownCard.value + 1) of \(Suit.glyph(forHashValue: playersKnownCard.suit))")
+                
+                showCardsForWar(playerWarVisible: playersKnownCard, playerWarNotVisible: playersUnknownCard, dealerWarVisible: computersKnownCard, dealerWarNotVisible: computersUnknownCard, playerCard: playersCard, dealerCard: computersCard)
                 
                 if playersKnownCard.value > computersKnownCard.value
                 {
                     print("The player wins the war!")
+                    showWinner(gameWinner: "Player")
                     playerHand.append(computersCard)
                     playerHand.append(playersCard)
                     playerHand.append(computersUnknownCard)
@@ -241,6 +335,7 @@ class GameScene: SKScene {
                 }else if computersKnownCard.value > playersKnownCard.value
                 {
                     print("The dealer wins the war!")
+                    showWinner(gameWinner: "Dealer")
                     computerHand.append(computersCard)
                     computerHand.append(playersCard)
                     computerHand.append(computersUnknownCard)
