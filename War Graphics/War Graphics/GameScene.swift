@@ -66,6 +66,9 @@ class GameScene: SKScene {
     
     var winner = SKLabelNode(fontNamed: "Helvetica")
     
+    var numberOfPlayerCards = SKLabelNode(fontNamed: "Helvetica")
+    var numberOfDealerCards = SKLabelNode(fontNamed: "Helvetica")
+    
     
 
     
@@ -238,17 +241,28 @@ class GameScene: SKScene {
         
     }
     
-    func showWinner(gameWinner: String)
+    func showInfo(gameWinner: String, playersCards: Int, dealersCards: Int)
     {
         winner.removeFromParent()
+        numberOfPlayerCards.removeFromParent()
+        numberOfDealerCards.removeFromParent()
+        
         
         winner.position = CGPoint(x: frame.size.width * 0.5, y: frame.size.height/2)
+        numberOfPlayerCards.position = CGPoint(x: frame.size.width * 0.90, y: frame.size.height * 0.05)
+        numberOfDealerCards.position = CGPoint(x: frame.size.width * 0.10, y: frame.size.height * 0.95)
         
         winner.fontSize = 100
+        numberOfPlayerCards.fontSize = 25
+        numberOfDealerCards.fontSize = 25
         
         winner.text = "\(gameWinner) Wins!"
+        numberOfPlayerCards.text = "Cards: \(playersCards)"
+        numberOfDealerCards.text = "Cards: \(dealersCards)"
         
         self.addChild(winner)
+        self.addChild(numberOfPlayerCards)
+        self.addChild(numberOfDealerCards)
     }
     
     func playWar()
@@ -290,16 +304,18 @@ class GameScene: SKScene {
             if playersCard.value > computersCard.value
             {
                 print("The player wins!")
-                showWinner(gameWinner: "Player")
+                
                 playerHand.append(computersCard)
                 playerHand.append(playersCard)
+                showInfo(gameWinner: "Player", playersCards: playerHand.count, dealersCards: computerHand.count)
                 
             }else if computersCard.value > playersCard.value
             {
                 print("The dealer wins!")
-                showWinner(gameWinner: "Dealer")
                 computerHand.append(computersCard)
                 computerHand.append(playersCard)
+                showInfo(gameWinner: "Dealer", playersCards: playerHand.count, dealersCards: computerHand.count)
+
                 
             }else if computersCard.value == playersCard.value
             {
@@ -325,23 +341,25 @@ class GameScene: SKScene {
                 if playersKnownCard.value > computersKnownCard.value
                 {
                     print("The player wins the war!")
-                    showWinner(gameWinner: "Player")
+                   
                     playerHand.append(computersCard)
                     playerHand.append(playersCard)
                     playerHand.append(computersUnknownCard)
                     playerHand.append(playersUnknownCard)
                     playerHand.append(computersKnownCard)
                     playerHand.append(playersKnownCard)
+                    showInfo(gameWinner: "Player", playersCards: playerHand.count, dealersCards: computerHand.count)
                 }else if computersKnownCard.value > playersKnownCard.value
                 {
                     print("The dealer wins the war!")
-                    showWinner(gameWinner: "Dealer")
+                    
                     computerHand.append(computersCard)
                     computerHand.append(playersCard)
                     computerHand.append(computersUnknownCard)
                     computerHand.append(playersUnknownCard)
                     computerHand.append(computersKnownCard)
                     computerHand.append(playersKnownCard)
+                    showInfo(gameWinner: "Dealer", playersCards: playerHand.count, dealersCards: computerHand.count)
                 }
                 
             }
